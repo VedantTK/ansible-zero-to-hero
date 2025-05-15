@@ -3,46 +3,370 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Sample Index Page</title>
+    <title>TechTrend Innovations - DevOps & Cloud Solutions</title>
+    <script src="https://cdn.tailwindcss.com"></script>
     <style>
-        body {
-            font-family: Arial, sans-serif;
-            margin: 0;
-            padding: 0;
-            background-color: #f4f4f4;
-            color: #333;
+        /* Custom styles for enhanced aesthetics and animations */
+        .fade-in {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: opacity 1s ease-out, transform 1s ease-out;
         }
-        header {
-            background-color: #4CAF50;
-            color: white;
-            padding: 1em;
-            text-align: center;
+        .fade-in.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+        .zoom-in {
+            opacity: 0;
+            transform: scale(0.95);
+            transition: opacity 1s ease-out, transform 1s ease-out;
+        }
+        .zoom-in.visible {
+            opacity: 1;
+            transform: scale(1);
+        }
+        .slide-in-left {
+            opacity: 0;
+            transform: translateX(-30px);
+            transition: opacity 1s ease-out, transform 1s ease-out;
+        }
+        .slide-in-left.visible {
+            opacity: 1;
+            transform: translateX(0);
+        }
+        .slide-in-right {
+            opacity: 0;
+            transform: translateX(30px);
+            transition: opacity 1s ease-out, transform 1s ease-out;
+        }
+        .slide-in-right.visible {
+            opacity: 1;
+            transform: translateX(0);
+        }
+        /* Parallax background effect */
+        .parallax {
+            background-attachment: fixed;
+            background-position: center;
+            background-size: cover;
+            background-repeat: no-repeat;
+        }
+        /* Custom hover effects */
+        .hover-scale {
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+        .hover-scale:hover {
+            transform: scale(1.05);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.15);
+        }
+        /* Ensure footer stays at bottom */
+        body {
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+            font-family: 'Inter', sans-serif;
         }
         main {
-            padding: 1em;
+            flex: 1 0 auto;
         }
         footer {
-            background-color: #333;
-            color: white;
-            text-align: center;
-            padding: 1em;
-            position: fixed;
-            bottom: 0;
-            width: 100%;
+            flex-shrink: 0;
+        }
+        /* Testimonial card styling */
+        .testimonial-card {
+            background: linear-gradient(135deg, #ffffff, #f1f5f9);
+            border-radius: 1rem;
+            padding: 2rem;
+            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.1);
+            transition: transform 0.4s ease, box-shadow 0.4s ease;
+        }
+        .testimonial-card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 12px 24px rgba(0, 0, 0, 0.2);
+        }
+        /* Button pulse animation */
+        .pulse {
+            animation: pulse 2.5s infinite;
+        }
+        @keyframes pulse {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.08); }
+            100% { transform: scale(1); }
+        }
+        /* Gradient button hover effect */
+        .gradient-btn {
+            background: linear-gradient(90deg, #1e40af, #3b82f6);
+            transition: background 0.3s ease;
+        }
+        .gradient-btn:hover {
+            background: linear-gradient(90deg, #3b82f6, #1e40af);
+        }
+        /* Smooth scrolling */
+        html {
+            scroll-behavior: smooth;
+        }
+        /* Custom typography */
+        h1, h2, h3 {
+            font-family: 'Poppins', sans-serif;
         }
     </style>
 </head>
-<body>
-    <header>
-        <h1>I am learning Ansible with Abhishek Veeramalla</h1>
-    </header>
-    <main>
-        <h2>Ansible Zero to Hero Series</h2>
-        <p> This is my First Ansible Playbook, Where I learnt how to deploy a static app on ec2 instance using Ansible. </p>
-        <p>For more information, visit www.youtube.com/abhishekveeramalla</p>
-    </main>
-    <footer>
-        <p>&copy; 2024 Abhishek.Veeramalla</p>
+<body class="bg-gray-50">
+    <!-- Navigation -->
+    <nav class="bg-blue-900 text-white fixed w-full top-0 z-50 shadow-xl">
+        <div class="container mx-auto px-4 py-4 flex justify-between items-center">
+            <div class="text-3xl font-bold slide-in-left">TechTrend Innovations</div>
+            <div class="space-x-6 hidden md:flex">
+                <a href="#home" class="hover:text-blue-200 slide-in-right transition-colors duration-300">Home</a>
+                <a href="#services" class="hover:text-blue-200 slide-in-right transition-colors duration-300">Services</a>
+                <a href="#why-choose-us" class="hover:text-blue-200 slide-in-right transition-colors duration-300">Why Choose Us</a>
+                <a href="#about" class="hover:text-blue-200 slide-in-right transition-colors duration-300">About</a>
+                <a href="#testimonials" class="hover:text-blue-200 slide-in-right transition-colors duration-300">Testimonials</a>
+                <a href="#contact" class="hover:text-blue-200 slide-in-right transition-colors duration-300">Contact</a>
+            </div>
+            <button id="menu-toggle" class="md:hidden focus:outline-none">
+                <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16m-7 6h7"></path>
+                </svg>
+            </button>
+        </div>
+        <!-- Mobile Menu -->
+        <div id="mobile-menu" class="hidden md:hidden bg-blue-900">
+            <a href="#home" class="block px-4 py-3 hover:bg-blue-800 transition-colors duration-300">Home</a>
+            <a href="#services" class="block px-4 py-3 hover:bg-blue-800 transition-colors duration-300">Services</a>
+            <a href="#why-choose-us" class="block px-4 py-3 hover:bg-blue-800 transition-colors duration-300">Why Choose Us</a>
+            <a href="#about" class="block px-4 py-3 hover:bg-blue-800 transition-colors duration-300">About</a>
+            <a href="#testimonials" class="block px-4 py-3 hover:bg-blue-800 transition-colors duration-300">Testimonials</a>
+            <a href="#contact" class="block px-4 py-3 hover:bg-blue-800 transition-colors duration-300">Contact</a>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section id="home" class="bg-gradient-to-br from-blue-900 to-indigo-600 text-white pt-24 pb-20 parallax" style="background-image: url('https://images.unsplash.com/photo-1620641788421-7a1c342ea42e?ixlib=rb-4.0.3&auto=format&fit=crop&w=1920&q=80');">
+        <div class="container mx-auto px-4 text-center">
+            <h1 class="text-4xl md:text-6xl font-extrabold mb-6 fade-in">Transform Your Business with Next-Gen Technology</h1>
+            <p class="text-lg md:text-2xl mb-8 fade-in max-w-3xl mx-auto">Unlock unparalleled efficiency, security, and scalability with our expert DevOps, DevSecOps, Cloud, and Cloud Security solutions tailored to your unique business goals.</p>
+            <a href="#contact" class="gradient-btn text-white px-8 py-4 rounded-full font-semibold hover-scale pulse fade-in text-lg">Start Your Journey</a>
+        </div>
+    </section>
+
+    <!-- Services Section -->
+    <section id="services" class="py-20 bg-white">
+        <div class="container mx-auto px-4">
+            <h2 class="text-4xl md:text-5xl font-bold text-center mb-12 fade-in text-gray-800">Our Cutting-Edge Services</h2>
+            <p class="text-lg text-gray-600 text-center max-w-3xl mx-auto mb-12 fade-in">From automation to cloud security, our comprehensive solutions empower your business to thrive in the digital era.</p>
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+                <div class="bg-gray-50 p-8 rounded-xl shadow-lg hover-scale zoom-in">
+                    <h3 class="text-2xl font-semibold mb-4 text-blue-900">DevOps</h3>
+                    <p class="text-gray-600 mb-6">Accelerate your software delivery with automated CI/CD pipelines, containerization using Docker and Kubernetes, and infrastructure as code with Terraform, Ansible, and Jenkins for seamless, reliable deployments.</p>
+                    <ul class="text-gray-600 list-disc list-inside space-y-2">
+                        <li>Custom CI/CD Pipeline Design</li>
+                        <li>Kubernetes Orchestration</li>
+                        <li>Automated Testing & Deployment</li>
+                        <li>Infrastructure as Code (IaC)</li>
+                        <li>Monitoring & Performance Optimization</li>
+                    </ul>
+                </div>
+                <div class="bg-gray-50 p-8 rounded-xl shadow-lg hover-scale zoom-in">
+                    <h3 class="text-2xl font-semibold mb-4 text-blue-900">DevSecOps</h3>
+                    <p class="text-gray-600 mb-6">Embed security into your DevOps pipeline with automated vulnerability scanning, secure coding practices, and compliance management using tools like Snyk, OWASP ZAP, and HashiCorp Vault.</p>
+                    <ul class="text-gray-600 list-disc list-inside space-y-2">
+                        <li>Automated Security Testing</li>
+                        <li>Real-Time Vulnerability Scanning</li>
+                        <li>Compliance with ISO, SOC, and More</li>
+                        <li>Secure DevOps Workflow Design</li>
+                        <li>Threat Modeling & Remediation</li>
+                    </ul>
+                </div>
+                <div class="bg-gray-50 p-8 rounded-xl shadow-lg hover-scale zoom-in">
+                    <h3 class="text-2xl font-semibold mb-4 text-blue-900">Cloud Solutions</h3>
+                    <p class="text-gray-600 mb-6">Build scalable, cost-effective cloud infrastructure on AWS, Azure, or GCP with expertise in serverless architectures, hybrid cloud setups, and cloud-native application development.</p>
+                    <ul class="text-gray-600 list-disc list-inside space-y-2">
+                        <li>Seamless Cloud Migration</li>
+                        <li>Serverless Computing (AWS Lambda, Azure Functions)</li>
+                        <li>Multi-Cloud & Hybrid Cloud Strategies</li>
+                        <li>Cloud-Native App Development</li>
+                        <li>Cost Optimization & Scalability</li>
+                    </ul>
+                </div>
+                <div class="bg-gray-50 p-8 rounded-xl shadow-lg hover-scale zoom-in">
+                    <h3 class="text-2xl font-semibold mb-4 text-blue-900">Cloud Security</h3>
+                    <p class="text-gray-600 mb-6">Safeguard your cloud environment with advanced security policies, real-time threat detection, and compliance with standards like GDPR, HIPAA, SOC 2, and PCI-DSS using AWS Shield, Azure Sentinel, and more.</p>
+                    <ul class="text-gray-600 list-disc list-inside space-y-2">
+                        <li>Identity & Access Management (IAM)</li>
+                        <li>Real-Time Threat Detection</li>
+                        <li>Data Encryption & Key Management</li>
+                        <li>Compliance Audits & Reporting</li>
+                        <li>Zero Trust Architecture</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Why Choose Us Section -->
+    <section id="why-choose-us" class="py-20 bg-gradient-to-br from-gray-200 to-gray-300">
+        <div class="container mx-auto px-4">
+            <h2 class="text-4xl md:text-5xl font-bold text-center mb-12 fade-in text-gray-800">Why Partner with Us</h2>
+            <p class="text-lg text-gray-600 text-center max-w-3xl mx-auto mb-12 fade-in">Discover the difference of working with a team dedicated to your success, delivering innovative solutions with unmatched expertise.</p>
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                <div class="bg-white p-8 rounded-xl shadow-lg hover-scale slide-in-left">
+                    <h3 class="text-2xl font-semibold mb-4 text-blue-900">Unmatched Expertise</h3>
+                    <p class="text-gray-600">Our certified professionals bring decades of combined experience in DevOps, security, and cloud technologies, ensuring top-tier solutions for your business.</p>
+                </div>
+                <div class="bg-white p-8 rounded-xl shadow-lg hover-scale slide-in-left">
+                    <h3 class="text-2xl font-semibold mb-4 text-blue-900">Tailored Solutions</h3>
+                    <p class="text-gray-600">We craft bespoke strategies aligned with your business goals, delivering scalable, efficient, and innovative solutions to drive growth.</p>
+                </div>
+                <div class="bg-white p-8 rounded-xl shadow-lg hover-scale slide-in-left">
+                    <h3 class="text-2xl font-semibold mb-4 text-blue-900">24/7 Support</h3>
+                    <p class="text-gray-600">Our global support team provides round-the-clock assistance, ensuring your operations run smoothly with proactive monitoring and rapid issue resolution.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- About Section -->
+    <section id="about" class="py-20 bg-white">
+        <div class="container mx-auto px-4">
+            <h2 class="text-4xl md:text-5xl font-bold text-center mb-12 fade-in text-gray-800">About TechTrend Innovations</h2>
+            <p class="text-lg text-gray-600 text-center max-w-3xl mx-auto mb-12 fade-in">
+                Founded in 2015, TechTrend Innovations is a global leader in DevOps, DevSecOps, Cloud, and Cloud Security solutions. Our mission is to empower businesses through cutting-edge technology, driving digital transformation and operational excellence. With a team of over 150 certified experts, we serve clients from startups to Fortune 500 companies across industries like finance, healthcare, and e-commerce. Our commitment to innovation ensures your business stays ahead in a rapidly evolving tech landscape.
+            </p>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-8 mt-8">
+                <div class="bg-gray-50 p-8 rounded-xl shadow-lg hover-scale zoom-in">
+                    <h3 class="text-2xl font-semibold mb-4 text-blue-900">Our Mission</h3>
+                    <p class="text-gray-600">To accelerate business success through innovative, secure, and scalable technology solutions tailored to your unique needs.</p>
+                </div>
+                <div class="bg-gray-50 p-8 rounded-xl shadow-lg hover-scale zoom-in">
+                    <h3 class="text-2xl font-semibold mb-4 text-blue-900">Our Vision</h3>
+                    <p class="text-gray-600">To be the trusted global partner for businesses, pioneering the future of cloud and DevOps innovation with unmatched expertise.</p>
+                </div>
+            </div>
+            <div class="mt-12 text-center">
+                <p class="text-lg text-gray-600 fade-in">We partner with industry leaders like AWS, Microsoft, and Google to deliver solutions that are secure, scalable, and future-proof.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Testimonials Section -->
+    <section id="testimonials" class="py-20 bg-gradient-to-br from-gray-200 to-gray-300 parallax" style="background-image: url('https://images.unsplash.com/photo-1451187580459-43490279c0fa?ixlib=rb-4.0.3&auto=format&fit=crop&w=1920&q=80');">
+        <div class="container mx-auto px-4">
+            <h2 class="text-4xl md:text-5xl font-bold text-center mb-12 fade-in text-gray-800">What Our Clients Say</h2>
+            <p class="text-lg text-gray-600 text-center max-w-3xl mx-auto mb-12 fade-in">Hear from our satisfied clients who have transformed their businesses with our innovative solutions.</p>
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+                <div class="testimonial-card slide-in-right">
+                    <p class="text-gray-600 italic mb-4">"TechTrend's DevOps expertise slashed our release cycles by 50%, boosting team productivity and agility."</p>
+                    <p class="font-semibold text-blue-900">Jane Doe, CTO at InnovateCorp</p>
+                </div>
+                <div class="testimonial-card slide-in-right">
+                    <p class="text-gray-600 italic mb-4">"Their cloud security solutions ensured compliance and provided robust protection for our data."</p>
+                    <p class="font-semibold text-blue-900">John Smith, CEO at SecureTech</p>
+                </div>
+                <div class="testimonial-card slide-in-right">
+                    <p class="text-gray-600 italic mb-4">"DevSecOps integration was seamless, enhancing our security without slowing development."</p>
+                    <p class="font-semibold text-blue-900">Emily Brown, VP at TechFlow</p>
+                </div>
+                <div class="testimonial-card slide-in-right">
+                    <p class="text-gray-600 italic mb-4">"Their cloud migration services enabled us to scale on AWS with zero downtime."</p>
+                    <p class="font-semibold text-blue-900">Michael Lee, Director at CloudPeak</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Contact Section -->
+    <section id="contact" class="py-20 bg-white">
+        <div class="container mx-auto px-4">
+            <h2 class="text-4xl md:text-5xl font-bold text-center mb-12 fade-in text-gray-800">Get in Touch</h2>
+            <p class="text-lg text-gray-600 text-center max-w-3xl mx-auto mb-12 fade-in">Ready to elevate your business? Contact us for a free consultation or to discuss your project needs.</p>
+            <div class="max-w-lg mx-auto bg-gray-50 p-8 rounded-xl shadow-lg zoom-in">
+                <div id="contact-form" class="space-y-6">
+                    <div>
+                        <label for="name" class="block text-gray-700 font-medium">Name</label>
+                        <input type="text" id="name" class="w-full p-3 border rounded-lg focus:ring-2 focus:ring-blue-900 transition-all duration-300" placeholder="Your Name" required>
+                    </div>
+                    <div>
+                        <label for="email" class="block text-gray-700 font-medium">Email</label>
+                        <input type="email" id="email" class="w-full p-3 border rounded-lg focus:ring-2 focus:ring-blue-900 transition-all duration-300" placeholder="Your Email" required>
+                    </div>
+                    <div>
+                        <label for="phone" class="block text-gray-700 font-medium">Phone (Optional)</label>
+                        <input type="tel" id="phone" class="w-full p-3 border rounded-lg focus:ring-2 focus:ring-blue-900 transition-all duration-300" placeholder="Your Phone">
+                    </div>
+                    <div>
+                        <label for="message" class="block text-gray-700 font-medium">Message</label>
+                        <textarea id="message" class="w-full p-3 border rounded-lg focus:ring-2 focus:ring-blue-900 transition-all duration-300" rows="5" placeholder="Tell us about your project" required></textarea>
+                    </div>
+                    <button id="submit-btn" class="gradient-btn text-white px-8 py-4 rounded-full font-semibold hover-scale pulse w-full text-lg">Send Message</button>
+                </div>
+                <p id="form-message" class="text-green-600 hidden mt-6 text-center font-medium"></p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="bg-blue-900 text-white py-10">
+        <div class="container mx-auto px-4 text-center">
+            <p class="fade-in text-lg">© 2025 TechTrend Innovations. All rights reserved.</p>
+            <div class="mt-6 space-x-6 fade-in">
+                <a href="#" class="hover:text-blue-200 transition-colors duration-300">Privacy Policy</a>
+                <a href="#" class="hover:text-blue-200 transition-colors duration-300">Terms of Service</a>
+                <a href="mailto:info@techtrend.com" class="hover:text-blue-200 transition-colors duration-300">info@techtrend.com</a>
+                <a href="tel:+1234567890" class="hover:text-blue-200 transition-colors duration-300">+1 (234) 567-890</a>
+            </div>
+        </div>
     </footer>
+
+    <script>
+        // Mobile menu toggle
+        const menuToggle = document.getElementById('menu-toggle');
+        const mobileMenu = document.getElementById('mobile-menu');
+        menuToggle.addEventListener('click', () => {
+            mobileMenu.classList.toggle('hidden');
+        });
+
+        // Animation on scroll
+        const animateElements = document.querySelectorAll('.fade-in, .zoom-in, .slide-in-left, .slide-in-right');
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('visible');
+                }
+            });
+        }, { threshold: 0.2 });
+
+        animateElements.forEach(element => {
+            observer.observe(element);
+        });
+
+        // Contact form submission simulation
+        const contactForm = document.getElementById('contact-form');
+        const submitBtn = document.getElementById('submit-btn');
+        const formMessage = document.getElementById('form-message');
+
+        submitBtn.addEventListener('click', (e) => {
+            e.preventDefault();
+            const name = document.getElementById('name').value;
+            const email = document.getElementById('email').value;
+            const message = document.getElementById('message').value;
+
+            if (name && email && message) {
+                formMessage.textContent = 'Thank you for your message! Our team will respond within 24 hours.';
+                formMessage.classList.remove('hidden', 'text-red-600');
+                formMessage.classList.add('text-green-600');
+                contactForm.reset();
+                setTimeout(() => {
+                    formMessage.classList.add('hidden');
+                }, 5000);
+            } else {
+                formMessage.textContent = 'Please fill out all required fields.';
+                formMessage.classList.remove('hidden', 'text-green-600');
+                formMessage.classList.add('text-red-600');
+                setTimeout(() => {
+                    formMessage.classList.add('hidden');
+                }, 3000);
+            }
+        });
+    </script>
 </body>
 </html>
